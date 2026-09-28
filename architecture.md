@@ -187,20 +187,6 @@ totals           gross 40 · discount 0 · taxable 33.90
 
 Calling `generate` again with the same `orderId` returns this same invoice — it does not create a second one.
 
-## G. Britannia has no invoice yet
-
-```
-Britannia  ──►  product classified, HSN 19053100, rate 18%  ──►  tax maths verified
-           ──►  but no paid order exists at Karthik shop    ──►  no invoice saved
-```
-
-Paid Britannia orders `6aafd481…` and `6aac2051…` exist in the database but belong to a **different shop**, so no invoice was generated against them. The Britannia figures (63.56 / 5.72 / 5.72 / 75.00) come from `buildInvoice()` on a test payload — correct maths, but not a stored document.
-
-## H. Open data issues
-
-**1. Shop GSTIN invalid.** `3627U46UFBN` is 11 characters; a GSTIN is 15. It also starts `36` (Maharashtra) on a Karnataka shop. Invoice leaves `gstin` blank and keeps the raw value. Fix before filing returns.
-
-**2. Product name vs HSN mismatch.** Product `6aa6e6265bb3bcc1bcbf3344` is **Lay's  Chips** in the catalogue, but the order line and the saved invoice both say **KitKat Chocolate Bar**. The stored HSN `180690` (chocolate, 18%) matches KitKat, not Lay's — chips are `190590` at 12%. Either the catalogue name is wrong or the HSN is.
 
 **3. Only 2 of 51 products have an HSN.** The rest are blocked at invoicing rather than charged 0%.
 
