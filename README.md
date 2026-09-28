@@ -118,15 +118,4 @@ GET  /api/invoice?merchantId=
 GET  /api/invoice/:id
 ```
 
-Unknown HSN → 404 with `gstRate: null`. Unpaid order → 409.
-
-## Verification
-
-43/43 assertions passed, figures re-derived independently of the engine. 9/9 live endpoints correct, no mocks; invoice persisted as `INV-2627-00001`; `generate` idempotent. Regressions: `/api/shopProduct/getAdminAddedProducts` and `/api/shop/getShopRating` still 200; stderr clean.
-
-## Not implemented
-
-- 2 of 51 products have an HSN; the rest are blocked at invoicing. Keyword backfill was trialled and rejected as unsafe.
-- No PDF/ESC-POS, no GSTR-1 file, no credit notes.
-- `config/gstRates.js` requires manual update when the GST Council changes rates.
 
